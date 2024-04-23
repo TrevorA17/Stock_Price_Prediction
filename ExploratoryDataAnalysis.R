@@ -51,4 +51,12 @@ variance_values <- sapply(stock_data[, c("High", "Low", "Open", "Close", "Volume
 cat("\nVariance values:\n")
 print(variance_values)
 
+# Correlation matrix for numeric variables
+correlation_matrix <- cor(stock_data[, c("High", "Low", "Open", "Close", "Volume", "Adj_Close")])
+cat("Correlation matrix:\n")
+print(correlation_matrix)
+
+# Pairwise scatterplots for numeric variables
+pairs(stock_data[, c("High", "Low", "Open", "Close", "Volume", "Adj_Close")])
+
 
