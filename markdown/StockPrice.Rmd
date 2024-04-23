@@ -35,3 +35,75 @@ knitr::opts_chunk$set(
   collapse = FALSE
 )
 ```
+
+```{r Load dataset}
+# Load dataset
+stock_data <- read.csv("stock.csv", colClasses = c(
+  Date = "Date",
+  High = "numeric",
+  Low = "numeric",
+  Open = "numeric",
+  Close = "numeric",
+  Volume = "numeric",
+  Adj_Close = "numeric"
+))
+
+# Display the structure of the dataset
+str(stock_data)
+
+# View the first few rows of the dataset
+head(stock_data)
+
+# Open the dataset in a viewer window
+View(stock_data)
+```
+
+```{r Measures of Frequency}
+# Summary statistics for numeric variables
+summary(stock_data[, c("High", "Low", "Open", "Close", "Volume", "Adj_Close")])
+```
+
+```{r Measures of Central Tendency}
+# Mean for numeric variables
+mean_values <- sapply(stock_data[, c("High", "Low", "Open", "Close", "Volume", "Adj_Close")], mean)
+cat("Mean values:\n")
+print(mean_values)
+
+# Median for numeric variables
+median_values <- sapply(stock_data[, c("High", "Low", "Open", "Close", "Volume", "Adj_Close")], median)
+cat("\nMedian values:\n")
+print(median_values)
+```
+
+```{r Measures of Distrbution}
+# Range for numeric variables
+range_values <- sapply(stock_data[, c("High", "Low", "Open", "Close", "Volume", "Adj_Close")], function(x) c(min(x), max(x)))
+cat("Range values:\n")
+print(range_values)
+
+# Interquartile range (IQR) for numeric variables
+iqr_values <- sapply(stock_data[, c("High", "Low", "Open", "Close", "Volume", "Adj_Close")], IQR)
+cat("\nInterquartile range (IQR) values:\n")
+print(iqr_values)
+
+# Standard deviation for numeric variables
+sd_values <- sapply(stock_data[, c("High", "Low", "Open", "Close", "Volume", "Adj_Close")], sd)
+cat("\nStandard deviation values:\n")
+print(sd_values)
+
+# Variance for numeric variables
+variance_values <- sapply(stock_data[, c("High", "Low", "Open", "Close", "Volume", "Adj_Close")], var)
+cat("\nVariance values:\n")
+print(variance_values)
+```
+
+```{r Measures of Relationship}
+# Correlation matrix for numeric variables
+correlation_matrix <- cor(stock_data[, c("High", "Low", "Open", "Close", "Volume", "Adj_Close")])
+cat("Correlation matrix:\n")
+print(correlation_matrix)
+
+# Pairwise scatterplots for numeric variables
+pairs(stock_data[, c("High", "Low", "Open", "Close", "Volume", "Adj_Close")])
+```
+
