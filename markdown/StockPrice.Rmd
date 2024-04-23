@@ -190,3 +190,65 @@ stock_data$Volume_scaled <- (stock_data$Volume - min_volume) / (max_volume - min
 summary(stock_data$Volume_scaled)
 ```
 
+```{r Data Splitting}
+# Set seed for reproducibility
+set.seed(123)
+
+# Determine the number of rows for training and testing sets
+total_rows <- nrow(stock_data)
+train_rows <- round(0.8 * total_rows)  # 80% for training
+test_rows <- total_rows - train_rows   # Remaining 20% for testing
+
+# Randomly shuffle the indices of rows
+indices <- sample(total_rows)
+
+# Split the indices into training and testing indices
+train_indices <- indices[1:train_rows]
+test_indices <- indices[(train_rows + 1):total_rows]
+
+# Split the dataset into training and testing sets
+train_data <- stock_data[train_indices, ]
+test_data <- stock_data[test_indices, ]
+
+# Check the dimensions of training and testing sets
+cat("Training data dimensions:", dim(train_data), "\n")
+cat("Testing data dimensions:", dim(test_data))
+```
+
+```{r ARIMA model training}
+# Load necessary libraries
+library(forecast)
+
+# Fit an ARIMA model
+model <- auto.arima(train_data)
+
+# Make predictions on the test data
+forecast_values <- forecast(model, h = length(test_data))
+
+# Evaluate the model
+accuracy(forecast_values, test_data)
+```
+
+```{r Save Model}
+# Saving the ARIMA model
+saveRDS(model, "./models/saved_arima_model.rds")
+
+new_data <- data.frame(
+  Date = as.Date("2024-04-24"),  # Example value for Date
+  High = 2094.120117,  # Example value for High
+  Low = 2070.290039,  # Example value for Low
+  Open = 2084.419922,  # Example value for Open
+  Close = 2089.139893,  # Example value for Close
+  Volume = 3884930000,  # Example value for Volume
+  Adj_Close = 2089.139893  # Example value for Adj Close
+)
+
+# Use the loaded model to make predictions
+loaded_model <- readRDS("./models/saved_arima_model.rds")
+predictions_loaded_model <- forecast(loaded_model, h = 1)
+
+# Print predictions
+print(predictions_loaded_model)
+```
+
+

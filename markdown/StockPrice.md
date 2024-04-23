@@ -340,3 +340,35 @@ summary(stock_data$Volume_scaled)
 
     ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
     ##  0.0000  0.2531  0.2985  0.3321  0.3674  1.0000
+
+``` r
+# Set seed for reproducibility
+set.seed(123)
+
+# Determine the number of rows for training and testing sets
+total_rows <- nrow(stock_data)
+train_rows <- round(0.8 * total_rows)  # 80% for training
+test_rows <- total_rows - train_rows   # Remaining 20% for testing
+
+# Randomly shuffle the indices of rows
+indices <- sample(total_rows)
+
+# Split the indices into training and testing indices
+train_indices <- indices[1:train_rows]
+test_indices <- indices[(train_rows + 1):total_rows]
+
+# Split the dataset into training and testing sets
+train_data <- stock_data[train_indices, ]
+test_data <- stock_data[test_indices, ]
+
+# Check the dimensions of training and testing sets
+cat("Training data dimensions:", dim(train_data), "\n")
+```
+
+    ## Training data dimensions: 1460 8
+
+``` r
+cat("Testing data dimensions:", dim(test_data))
+```
+
+    ## Testing data dimensions: 365 8
