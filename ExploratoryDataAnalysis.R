@@ -30,3 +30,25 @@ print(mean_values)
 median_values <- sapply(stock_data[, c("High", "Low", "Open", "Close", "Volume", "Adj_Close")], median)
 cat("\nMedian values:\n")
 print(median_values)
+
+# Range for numeric variables
+range_values <- sapply(stock_data[, c("High", "Low", "Open", "Close", "Volume", "Adj_Close")], function(x) c(min(x), max(x)))
+cat("Range values:\n")
+print(range_values)
+
+# Interquartile range (IQR) for numeric variables
+iqr_values <- sapply(stock_data[, c("High", "Low", "Open", "Close", "Volume", "Adj_Close")], IQR)
+cat("\nInterquartile range (IQR) values:\n")
+print(iqr_values)
+
+# Standard deviation for numeric variables
+sd_values <- sapply(stock_data[, c("High", "Low", "Open", "Close", "Volume", "Adj_Close")], sd)
+cat("\nStandard deviation values:\n")
+print(sd_values)
+
+# Variance for numeric variables
+variance_values <- sapply(stock_data[, c("High", "Low", "Open", "Close", "Volume", "Adj_Close")], var)
+cat("\nVariance values:\n")
+print(variance_values)
+
+
