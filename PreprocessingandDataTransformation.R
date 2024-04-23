@@ -18,3 +18,17 @@ head(stock_data)
 # Open the dataset in a viewer window
 View(stock_data)
 
+# Check for missing values in the dataset
+missing_values <- colSums(is.na(stock_data))
+
+# Display the number of missing values for each variable
+print(missing_values)
+
+# Check if any missing values exist in the dataset
+if (sum(missing_values) > 0) {
+  print("Missing values are present in the dataset.")
+} else {
+  print("No missing values found in the dataset.")
+}
+
+
