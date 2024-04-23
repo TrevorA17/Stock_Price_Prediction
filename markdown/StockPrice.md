@@ -303,3 +303,40 @@ if (sum(missing_values) > 0) {
 ```
 
     ## [1] "No missing values found in the dataset."
+
+``` r
+# Standardization of numeric variables (mean = 0, standard deviation = 1)
+numeric_vars <- c("High", "Low", "Open", "Close", "Volume", "Adj_Close")
+stock_data_standardized <- scale(stock_data[, numeric_vars])
+
+# Check the summary statistics of standardized variables
+summary(stock_data_standardized)
+```
+
+    ##       High               Low                Open             Close         
+    ##  Min.   :-1.98623   Min.   :-2.03487   Min.   :-1.9999   Min.   :-2.01025  
+    ##  1st Qu.:-0.76247   1st Qu.:-0.76814   1st Qu.:-0.7509   1st Qu.:-0.78297  
+    ##  Median : 0.08673   Median : 0.08662   Median : 0.0928   Median : 0.08712  
+    ##  Mean   : 0.00000   Mean   : 0.00000   Mean   : 0.0000   Mean   : 0.00000  
+    ##  3rd Qu.: 0.65922   3rd Qu.: 0.66259   3rd Qu.: 0.6537   3rd Qu.: 0.66207  
+    ##  Max.   : 2.40497   Max.   : 2.39258   Max.   : 2.3685   Max.   : 2.40376  
+    ##      Volume          Adj_Close       
+    ##  Min.   :-2.3659   Min.   :-2.01025  
+    ##  1st Qu.:-0.5624   1st Qu.:-0.78297  
+    ##  Median :-0.2390   Median : 0.08712  
+    ##  Mean   : 0.0000   Mean   : 0.00000  
+    ##  3rd Qu.: 0.2512   3rd Qu.: 0.66207  
+    ##  Max.   : 4.7583   Max.   : 2.40376
+
+``` r
+# Min-max scaling of 'Volume' variable to range [0, 1]
+min_volume <- min(stock_data$Volume)
+max_volume <- max(stock_data$Volume)
+stock_data$Volume_scaled <- (stock_data$Volume - min_volume) / (max_volume - min_volume)
+
+# Check the summary statistics of scaled 'Volume' variable
+summary(stock_data$Volume_scaled)
+```
+
+    ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    ##  0.0000  0.2531  0.2985  0.3321  0.3674  1.0000
