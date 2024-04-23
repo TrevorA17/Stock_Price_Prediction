@@ -59,4 +59,53 @@ print(correlation_matrix)
 # Pairwise scatterplots for numeric variables
 pairs(stock_data[, c("High", "Low", "Open", "Close", "Volume", "Adj_Close")])
 
+# Load necessary library
+library(ggplot2)
+
+# Univariate histogram for 'Close' price
+ggplot(stock_data, aes(x = Close)) +
+  geom_histogram(binwidth = 50, fill = "skyblue", color = "black") +
+  labs(title = "Histogram of Close Price", x = "Close Price", y = "Frequency")
+
+# Univariate boxplot for 'Volume'
+ggplot(stock_data, aes(y = Volume)) +
+  geom_boxplot(fill = "lightgreen", color = "black") +
+  labs(title = "Boxplot of Volume", y = "Volume")
+
+# Univariate density plot for 'High' price
+ggplot(stock_data, aes(x = High)) +
+  geom_density(fill = "orange", color = "black") +
+  labs(title = "Density Plot of High Price", x = "High Price", y = "Density")
+
+# Load necessary library
+library(ggplot2)
+
+# Multivariate scatter plot matrix
+scatterplot_matrix <- ggplot(stock_data, aes(x = High, y = Low)) +
+  geom_point(color = "blue") +
+  labs(title = "Scatter Plot Matrix of High vs. Low Prices")
+
+# Display the scatter plot matrix
+print(scatterplot_matrix)
+
+# Scatter plot with size encoding for 'Volume' and color encoding for 'High' prices
+scatterplot <- ggplot(stock_data, aes(x = High, y = Low, size = Volume, color = High)) +
+  geom_point(alpha = 0.7) +
+  scale_size_continuous(name = "Volume") +
+  scale_color_gradient(low = "green", high = "red", name = "High Price") +
+  labs(title = "Scatter Plot of High vs. Low Prices with Volume Encoding")
+
+# Display the scatter plot
+print(scatterplot)
+
+# Scatter plot with color encoding for 'Open' and 'Close' prices
+scatterplot <- ggplot(stock_data, aes(x = Open, y = Close, color = abs(Close - Open))) +
+  geom_point() +
+  scale_color_gradient(low = "blue", high = "red", name = "Price Difference") +
+  labs(title = "Scatter Plot of Open vs. Close Prices")
+
+# Display the scatter plot
+print(scatterplot)
+
+
 
