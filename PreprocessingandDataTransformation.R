@@ -46,3 +46,5 @@ stock_data$Volume_scaled <- (stock_data$Volume - min_volume) / (max_volume - min
 # Check the summary statistics of scaled 'Volume' variable
 summary(stock_data$Volume_scaled)
 
+
+

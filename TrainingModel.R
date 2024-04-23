@@ -40,3 +40,51 @@ test_data <- stock_data[test_indices, ]
 # Check the dimensions of training and testing sets
 cat("Training data dimensions:", dim(train_data), "\n")
 cat("Testing data dimensions:", dim(test_data))
+
+# Load necessary libraries
+library(forecast)
+
+# Convert 'Date' column to Date format
+stock_data$Date <- as.Date(stock_data$Date, format = "%d-%m-%y")
+
+# Sort the data by Date
+stock_data <- stock_data[order(stock_data$Date), ]
+
+# Create a time series object
+ts_data <- ts(stock_data$Close, frequency = 365)
+
+# Split data into training and testing sets
+split_index <- floor(0.8 * length(ts_data))
+train_data <- ts_data[1:split_index]
+test_data <- ts_data[(split_index + 1):length(ts_data)]
+
+# Fit an ARIMA model
+model <- auto.arima(train_data)
+
+# Make predictions on the test data
+forecast_values <- forecast(model, h = length(test_data))
+
+# Evaluate the model
+accuracy(forecast_values, test_data)
+
+# Load necessary libraries
+library(forecast)
+
+# Convert 'Date' column to Date format
+stock_data$Date <- as.Date(stock_data$Date, format = "%d-%m-%y")
+
+# Sort the data by Date
+stock_data <- stock_data[order(stock_data$Date), ]
+
+# Create a time series object
+ts_data <- ts(stock_data$Close, frequency = 365)
+
+# Define the number of folds for time series cross-validation
+num_folds <- 5
+
+# Perform time series cross-validation
+cv_results <- tsCV(ts_data, forecastfunction = auto.arima, h = 1, initial = floor(length(ts_data) * 0.8))
+
+# Display cross-validation results
+print(cv_results)
+
