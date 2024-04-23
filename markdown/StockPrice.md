@@ -209,3 +209,97 @@ pairs(stock_data[, c("High", "Low", "Open", "Close", "Volume", "Adj_Close")])
 ```
 
 ![](StockPrice_files/figure-gfm/Measures%20of%20Relationship-1.png)<!-- -->
+
+``` r
+# Load necessary library
+library(ggplot2)
+
+# Univariate histogram for 'Close' price
+ggplot(stock_data, aes(x = Close)) +
+  geom_histogram(binwidth = 50, fill = "skyblue", color = "black") +
+  labs(title = "Histogram of Close Price", x = "Close Price", y = "Frequency")
+```
+
+![](StockPrice_files/figure-gfm/Basic%20Visualizations-1.png)<!-- -->
+
+``` r
+# Univariate boxplot for 'Volume'
+ggplot(stock_data, aes(y = Volume)) +
+  geom_boxplot(fill = "lightgreen", color = "black") +
+  labs(title = "Boxplot of Volume", y = "Volume")
+```
+
+![](StockPrice_files/figure-gfm/Basic%20Visualizations-2.png)<!-- -->
+
+``` r
+# Univariate density plot for 'High' price
+ggplot(stock_data, aes(x = High)) +
+  geom_density(fill = "orange", color = "black") +
+  labs(title = "Density Plot of High Price", x = "High Price", y = "Density")
+```
+
+![](StockPrice_files/figure-gfm/Basic%20Visualizations-3.png)<!-- -->
+
+``` r
+# Load necessary library
+library(ggplot2)
+
+# Multivariate scatter plot matrix
+scatterplot_matrix <- ggplot(stock_data, aes(x = High, y = Low)) +
+  geom_point(color = "blue") +
+  labs(title = "Scatter Plot Matrix of High vs. Low Prices")
+
+# Display the scatter plot matrix
+print(scatterplot_matrix)
+```
+
+![](StockPrice_files/figure-gfm/Basic%20Visualizations-4.png)<!-- -->
+
+``` r
+# Scatter plot with size encoding for 'Volume' and color encoding for 'High' prices
+scatterplot <- ggplot(stock_data, aes(x = High, y = Low, size = Volume, color = High)) +
+  geom_point(alpha = 0.7) +
+  scale_size_continuous(name = "Volume") +
+  scale_color_gradient(low = "green", high = "red", name = "High Price") +
+  labs(title = "Scatter Plot of High vs. Low Prices with Volume Encoding")
+
+# Display the scatter plot
+print(scatterplot)
+```
+
+![](StockPrice_files/figure-gfm/Basic%20Visualizations-5.png)<!-- -->
+
+``` r
+# Scatter plot with color encoding for 'Open' and 'Close' prices
+scatterplot <- ggplot(stock_data, aes(x = Open, y = Close, color = abs(Close - Open))) +
+  geom_point() +
+  scale_color_gradient(low = "blue", high = "red", name = "Price Difference") +
+  labs(title = "Scatter Plot of Open vs. Close Prices")
+
+# Display the scatter plot
+print(scatterplot)
+```
+
+![](StockPrice_files/figure-gfm/Basic%20Visualizations-6.png)<!-- -->
+
+``` r
+# Check for missing values in the dataset
+missing_values <- colSums(is.na(stock_data))
+
+# Display the number of missing values for each variable
+print(missing_values)
+```
+
+    ##      Date      High       Low      Open     Close    Volume Adj_Close 
+    ##         0         0         0         0         0         0         0
+
+``` r
+# Check if any missing values exist in the dataset
+if (sum(missing_values) > 0) {
+  print("Missing values are present in the dataset.")
+} else {
+  print("No missing values found in the dataset.")
+}
+```
+
+    ## [1] "No missing values found in the dataset."
