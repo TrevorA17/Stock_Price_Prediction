@@ -17,3 +17,4 @@ head(stock_data)
 
 # Open the dataset in a viewer window
 View(stock_data)
+
