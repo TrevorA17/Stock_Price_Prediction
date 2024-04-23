@@ -20,3 +20,13 @@ View(stock_data)
 
 # Summary statistics for numeric variables
 summary(stock_data[, c("High", "Low", "Open", "Close", "Volume", "Adj_Close")])
+
+# Mean for numeric variables
+mean_values <- sapply(stock_data[, c("High", "Low", "Open", "Close", "Volume", "Adj_Close")], mean)
+cat("Mean values:\n")
+print(mean_values)
+
+# Median for numeric variables
+median_values <- sapply(stock_data[, c("High", "Low", "Open", "Close", "Volume", "Adj_Close")], median)
+cat("\nMedian values:\n")
+print(median_values)
